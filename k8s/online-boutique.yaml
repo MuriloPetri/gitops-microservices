@@ -18,35 +18,6 @@
 
 # [START gke_release_kubernetes_manifests_microservices_demo]
 ---
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: boutique-online
-  namespace: argocd
-spec:
-  project: default
-  source:
-    repoURL: https://github.com/MuriloPetri/gitops-microservices.git
-    targetRevision: main
-    path: k8s
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: online-boutique
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
-  ignoreDifferences:
-    - group: apps
-      kind: Deployment
-      name: loadgenerator
-      namespace: online-boutique
-      jsonPointers:
-        - /status
-
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
