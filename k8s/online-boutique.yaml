@@ -95,10 +95,10 @@ spec:
             port: 8080
         resources:
           requests:
-            cpu: 200m
+            cpu: 100m
             memory: 64Mi
           limits:
-            cpu: 400m
+            cpu: 200m
             memory: 128Mi
 ---
 apiVersion: v1
@@ -467,12 +467,13 @@ spec:
           grpc:
             port: 50051
         resources:
-          requests:
-            cpu: 2000m
-            memory: 64Mi
-          limits:
-            cpu: 3000m
-            memory: 128Mi
+            requests:
+              cpu: "50m"         # antes provavelmente era "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "200m"
+              memory: "256Mi"
+
 ---
 apiVersion: v1
 kind: Service
