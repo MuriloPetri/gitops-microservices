@@ -95,5 +95,5 @@ kubectl port-forward svc/frontend -n default 8081:80
 ````
 abrir o navegador no localhost:
 ````bash
-kubectl port-forward svc/frontend -n default 8081:80
+http://localhost:8081/
 ````
