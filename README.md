@@ -1,57 +1,73 @@
-# 🚀 Projeto GitOps com ArgoCD: Deploy da Online Boutique no Kubernetes
+# 🚀 Projeto GitOps com Kubernetes e ArgoCD
 
-## ☁️ ARQUITETURA DO PROJETO
-- **Cluster Kubernetes local** gerenciado pelo Rancher Desktop.  
-- **ArgoCD** como ferramenta de GitOps para sincronizar manifests do GitHub.  
-- **Online Boutique** (microservices-demo da Google) implantada via YAML.  
-- **kubectl port-forward** para expor o frontend da aplicação localmente.  
+Este projeto demonstra a implementação de um ambiente de **microsserviços** utilizando práticas de **GitOps**.  
+O objetivo é implantar a aplicação **Online Boutique** em um **cluster Kubernetes local**, gerenciado pelo **Rancher Desktop**, com deploy contínuo controlado pelo **ArgoCD**.  
 
----
-
-## 🛠️ COMPONENTES
-🔹 **Rancher Desktop** — fornece o cluster Kubernetes local.  
-🔹 **kubectl** — CLI para interação com o Kubernetes.  
-🔹 **ArgoCD** — ferramenta GitOps para gerenciar os deploys.  
-🔹 **GitHub** — repositório contendo os manifests YAML.  
-🔹 **Online Boutique** — aplicação de microsserviços que simula uma loja virtual.  
+O **Git** é utilizado como **fonte única da verdade** para a infraestrutura e a aplicação, garantindo que as implantações sejam **auditáveis, previsíveis e versionadas**.  
 
 ---
 
-## 🚀 ETAPAS DE IMPLEMENTAÇÃO
+## ☁️ Arquitetura e Tecnologias
+- 🖥️ **Orquestração de Containers:** Kubernetes (via Rancher Desktop)  
+- ⚙️ **Ferramenta GitOps:** ArgoCD  
+- 🛍️ **Aplicação:** Online Boutique (microservices-demo da Google Cloud Platform)  
+- 📂 **Fonte da Verdade:** Repositório Git público no GitHub  
+- 💻 **Ambiente Local:** Rancher Desktop com Docker  
 
-### 1. Preparar o Repositório no GitHub
-1. Faça **fork** do repositório original:  
+---
+
+## 🛠️ Pré-requisitos
+Antes de iniciar, garanta que você tenha os seguintes softwares instalados e configurados:
+
+- Rancher Desktop com Kubernetes habilitado  
+- `kubectl` configurado e funcional (`kubectl get nodes`)  
+- Git instalado localmente  
+- Conta no GitHub  
+- Docker funcionando localmente (gerenciado pelo Rancher Desktop)  
+
+---
+
+## 🚀 Passo a Passo
+
+### 1️⃣ Preparar o Repositório no GitHub
+1. **Fork do Repositório Original**  
    👉 [GoogleCloudPlatform/microservices-demo](https://github.com/GoogleCloudPlatform/microservices-demo)  
-2. Crie um repositório público no seu GitHub (ex.: `gitops-microservices`).  
-3. Copie o arquivo `release/kubernetes-manifests.yaml` para dentro da estrutura:  
+
+2. **Crie seu Repositório GitOps**  
+   - Crie um novo repositório público no GitHub (ex.: `gitops-microservices`)  
+
+3. **Estruture os Manifestos**  
+   - Copie o arquivo `release/kubernetes-manifests.yaml` para dentro da seguinte estrutura:  
+
 gitops-microservices/
 └── k8s/
 └── online-boutique.yaml
 
 sql
 Copiar código
-4. Faça commit e push:  
+
+4. **Commit e Push**  
 ```bash
 git add .
 git commit -m "Adiciona manifests da Online Boutique"
 git push origin main
-2. Instalar o ArgoCD
+2️⃣ Instalar o ArgoCD
 Criar namespace:
 
 bash
 Copiar código
 kubectl create namespace argocd
-Instalar via manifesto oficial:
+Instalar o ArgoCD no cluster:
 
 bash
 Copiar código
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-Verificar pods:
+Verificar os pods:
 
 bash
 Copiar código
 kubectl get pods -n argocd
-3. Acessar o ArgoCD
+3️⃣ Acessar a Interface do ArgoCD
 Fazer port-forward:
 
 bash
@@ -60,21 +76,25 @@ kubectl -n argocd port-forward svc/argocd-server 8080:443
 Acessar no navegador:
 👉 https://localhost:8080
 
+Credenciais de login:
+
 Usuário: admin
 
-Recuperar senha inicial:
+Senha inicial:
 
 bash
 Copiar código
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d && echo
-4. Criar a Aplicação no ArgoCD
-Na interface do ArgoCD, clique em New Application.
+4️⃣ Criar e Sincronizar a Aplicação no ArgoCD
+Na interface do ArgoCD, clique em New Application
 
-Configure:
+Configure os parâmetros:
 
 Application Name: online-boutique
 
-Repository URL: seu repo GitHub
+Project Name: default
+
+Repository URL: URL do seu repositório GitHub
 
 Path: k8s
 
@@ -82,48 +102,34 @@ Cluster URL: https://kubernetes.default.svc
 
 Namespace: online-boutique
 
-Clique em Create e depois em Sync.
+Clique em Create e depois em Sync para aplicar os manifests.
 
-5. Verificar Deploy
-Listar recursos:
+5️⃣ Acessar a Aplicação
+Verifique os recursos implantados:
 
 bash
 Copiar código
 kubectl get all -n online-boutique
-Conferir pods:
+Confirme se os pods estão rodando:
 
 bash
 Copiar código
 kubectl get pods -n online-boutique
-6. Acessar o Frontend
-Como o serviço é ClusterIP, faça port-forward:
+Exponha o frontend (serviço ClusterIP) com port-forward:
 
 bash
 Copiar código
-kubectl -n online-boutique port-forward svc/frontend 8080:80
+kubectl -n online-boutique port-forward svc/frontend 7070:80
 Acesse no navegador:
-👉 http://localhost:8080
+👉 http://localhost:7070
 
-✅ RESULTADOS FINAIS
-Repositório Git público com os manifests YAML.
+✅ Entregas Esperadas
+📂 Repositório Git público com a estrutura de manifests YAML
 
-ArgoCD instalado e rodando no cluster.
+⚙️ ArgoCD instalado corretamente no cluster
 
-Aplicação sincronizada e pods Running.
+🔄 Aplicação criada no ArgoCD e vinculada ao repositório Git
 
-Frontend acessível via kubectl port-forward.
+🚀 Aplicação sincronizada e pods em estado Running
 
-⚡ CUSTOMIZAÇÃO (Opcional)
-Edite o online-boutique.yaml no seu repo.
-
-Exemplo: aumentar número de réplicas de um Deployment:
-
-yaml
-Copiar código
-spec:
-  replicas: 3
-Faça commit e push.
-
-O ArgoCD aplicará automaticamente no cluster.
-
-
+🌐 Frontend acessível via kubectl port-forward
