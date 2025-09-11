@@ -26,109 +26,78 @@ Antes de iniciar, garanta que você tenha os seguintes softwares instalados e co
 
 ---
 
-## 🚀 Passo a Passo
+# Projeto GitOps - Online Boutique
 
-### 1️⃣ Preparar o Repositório no GitHub
-1. **Fork do Repositório Original**  
-   👉 [GoogleCloudPlatform/microservices-demo](https://github.com/GoogleCloudPlatform/microservices-demo)  
+## Objetivo
 
-2. **Crie seu Repositório GitOps**  
-   - Crie um novo repositório público no GitHub (ex.: `gitops-microservices`)  
+Executar um conjunto de microserviços (**Online Boutique**) em Kubernetes local usando Rancher Desktop, controlado por GitOps com ArgoCD, a partir de um repositório público no GitHub.
 
-3. **Estruture os Manifestos**  
-   - Copie o arquivo `release/kubernetes-manifests.yaml` para dentro da seguinte estrutura:  
+---
 
-gitops-microservices/
-└── k8s/
-└── online-boutique.yaml
+## Passo a Passo
 
-sql
-Copiar código
+### 1. Instalar Rancher Desktop
 
-4. **Commit e Push**  
+- Baixe e instale o Rancher Desktop: [https://rancherdesktop.io/](https://rancherdesktop.io/)  
+- Durante a instalação, selecione **Kubernetes** como runtime.
+
+---
+
+### 2. Instalar Kubernetes e configurar kubectl
+
 ```bash
-git add .
-git commit -m "Adiciona manifests da Online Boutique"
-git push origin main
-2️⃣ Instalar o ArgoCD
-Criar namespace:
+# Verificar nodes do cluster
+kubectl get nodes
+````
 
-bash
-Copiar código
+### 3. Instalando o Argocd no cluster
+````bash
 kubectl create namespace argocd
-Instalar o ArgoCD no cluster:
-
-bash
-Copiar código
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-Verificar os pods:
+````
 
-bash
-Copiar código
-kubectl get pods -n argocd
-3️⃣ Acessar a Interface do ArgoCD
-Fazer port-forward:
+###. Acessando o ArgoCD localmente
+````bash
+kubectl port-forward svc/argocd-server -n argocd 8080:443
+````
+Acesse o navegador: 
+````bash
+https://localhost:8080/
+````
+Usuário: admin (por padrão do Argo)
+senha: Voce precisará desse comando
+````bash
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+````
+e ele retornará a senha pra você
 
-bash
-Copiar código
-kubectl -n argocd port-forward svc/argocd-server 8080:443
-Acessar no navegador:
-👉 https://localhost:8080
+### 9. Criar Application no ArgoCD
 
-Credenciais de login:
+Clique em *New App*
 
-Usuário: admin
-
-Senha inicial:
-
-bash
-Copiar código
-kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d && echo
-4️⃣ Criar e Sincronizar a Aplicação no ArgoCD
-Na interface do ArgoCD, clique em New Application
-
-Configure os parâmetros:
+Configurações:
 
 Application Name: online-boutique
 
-Project Name: default
+Project: *default*
 
-Repository URL: URL do seu repositório GitHub
+Sync Policy: *Automatic*
 
-Path: k8s
+Repository URL: URL do seu repositório público
 
-Cluster URL: https://kubernetes.default.svc
+Path: *k8s*
 
-Namespace: online-boutique
+Cluster: *https://kubernetes.default.svc*
 
-Clique em Create e depois em Sync para aplicar os manifests.
+Clique em Create.
 
-5️⃣ Acessar a Aplicação
-Verifique os recursos implantados:
+Após isso, espere todos os pod's serem processados e healthy
 
-bash
-Copiar código
-kubectl get all -n online-boutique
-Confirme se os pods estão rodando:
-
-bash
-Copiar código
-kubectl get pods -n online-boutique
-Exponha o frontend (serviço ClusterIP) com port-forward:
-
-bash
-Copiar código
-kubectl -n online-boutique port-forward svc/frontend 7070:80
-Acesse no navegador:
-👉 http://localhost:7070
-
-✅ Entregas Esperadas
-📂 Repositório Git público com a estrutura de manifests YAML
-
-⚙️ ArgoCD instalado corretamente no cluster
-
-🔄 Aplicação criada no ArgoCD e vinculada ao repositório Git
-
-🚀 Aplicação sincronizada e pods em estado Running
-
-🌐 Frontend acessível via kubectl port-forward
+### 10. Front end App
+````bash
+kubectl port-forward svc/frontend -n default 8081:80
+````
+abrir o navegador no localhost:
+````bash
+kubectl port-forward svc/frontend -n default 8081:80
+````
