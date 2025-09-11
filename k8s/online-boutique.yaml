@@ -185,6 +185,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: recommendationservice
+  namespace: online-boutique
   labels:
     app: recommendationservice
 spec:
