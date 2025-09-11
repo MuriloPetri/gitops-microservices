@@ -22,7 +22,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: emailservice
-  namespace: online-boutique
   labels:
     app: emailservice
 spec:
@@ -78,7 +77,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: emailservice
-  namespace: online-boutique
   labels:
     app: emailservice
 spec:
@@ -94,13 +92,11 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: emailservice
-  namespace: online-boutique
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: checkoutservice
-  namespace: online-boutique
   labels:
     app: checkoutservice
 spec:
@@ -163,7 +159,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: checkoutservice
-  namespace: online-boutique
   labels:
     app: checkoutservice
 spec:
@@ -179,13 +174,11 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: checkoutservice
-  namespace: online-boutique
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: recommendationservice
-  namespace: online-boutique
   labels:
     app: recommendationservice
 spec:
@@ -243,7 +236,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: recommendationservice
-  namespace: online-boutique
   labels:
     app: recommendationservice
 spec:
@@ -259,13 +251,11 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: recommendationservice
-  namespace: online-boutique
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
-  namespace: online-boutique
   labels:
     app: frontend
 spec:
@@ -359,7 +349,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: frontend
-  namespace: online-boutique
   labels:
     app: frontend
 spec:
@@ -375,11 +364,10 @@ apiVersion: v1
 kind: Service
 metadata:
   name: frontend-external
-  namespace: online-boutique
   labels:
     app: frontend
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: frontend
   ports:
@@ -391,13 +379,11 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: frontend
-  namespace: online-boutique
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: paymentservice
-  namespace: online-boutique
   labels:
     app: paymentservice
 spec:
@@ -451,7 +437,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: paymentservice
-  namespace: online-boutique
   labels:
     app: paymentservice
 spec:
@@ -467,13 +452,11 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: paymentservice
-  namespace: online-boutique
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: productcatalogservice
-  namespace: online-boutique
   labels:
     app: productcatalogservice
 spec:
@@ -527,7 +510,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: productcatalogservice
-  namespace: online-boutique
   labels:
     app: productcatalogservice
 spec:
@@ -543,13 +525,11 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: productcatalogservice
-  namespace: online-boutique
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cartservice
-  namespace: online-boutique
   labels:
     app: cartservice
 spec:
@@ -604,7 +584,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: cartservice
-  namespace: online-boutique
   labels:
     app: cartservice
 spec:
@@ -620,13 +599,11 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: cartservice
-  namespace: online-boutique
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: redis-cart
-  namespace: online-boutique
   labels:
     app: redis-cart
 spec:
@@ -681,7 +658,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: redis-cart
-  namespace: online-boutique
   labels:
     app: redis-cart
 spec:
@@ -697,7 +673,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: loadgenerator
-  namespace: online-boutique
   labels:
     app: loadgenerator
 spec:
@@ -780,13 +755,11 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: loadgenerator
-  namespace: online-boutique
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: currencyservice
-  namespace: online-boutique
   labels:
     app: currencyservice
 spec:
@@ -841,7 +814,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: currencyservice
-  namespace: online-boutique
   labels:
     app: currencyservice
 spec:
@@ -857,13 +829,11 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: currencyservice
-  namespace: online-boutique
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: shippingservice
-  namespace: online-boutique
   labels:
     app: shippingservice
 spec:
@@ -917,7 +887,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: shippingservice
-  namespace: online-boutique
   labels:
     app: shippingservice
 spec:
@@ -933,13 +902,11 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: shippingservice
-  namespace: online-boutique
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: adservice
-  namespace: online-boutique
   labels:
     app: adservice
 spec:
@@ -995,7 +962,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: adservice
-  namespace: online-boutique
   labels:
     app: adservice
 spec:
@@ -1011,5 +977,4 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: adservice
-  namespace: online-boutique
 # [END gke_release_kubernetes_manifests_microservices_demo]
