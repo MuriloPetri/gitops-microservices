@@ -466,13 +466,13 @@ spec:
         livenessProbe:
           grpc:
             port: 50051
-        resources:
+         resources:
             requests:
-              cpu: "50m"         # antes provavelmente era "100m"
-              memory: "128Mi"
+              cpu: 100m
+              memory: 64Mi
             limits:
-              cpu: "200m"
-              memory: "256Mi"
+              cpu: 200m
+              memory: 128Mi
 
 ---
 apiVersion: v1
