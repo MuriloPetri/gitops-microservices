@@ -126,24 +126,4 @@ Faça commit e push.
 
 O ArgoCD aplicará automaticamente no cluster.
 
-📚 REFERÊNCIAS
-ArgoCD Documentation
 
-Microservices Demo (Online Boutique)
-
-Rancher Desktop
-
-yaml
-Copiar código
-
----
-
-👉 Quer que eu faça também a versão desse README **com imagens de arquitetura (diagramas)** em Markdown, tipo a que você mostrou no do WordPress (com “Image” no lugar)?
-
-
-
-
-
-
-
-Perguntar ao ChatGPT
