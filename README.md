@@ -56,7 +56,7 @@ kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 ````
 
-###. Acessando o ArgoCD localmente
+### 4. Acessando o ArgoCD localmente
 ````bash
 kubectl port-forward svc/argocd-server -n argocd 8080:443
 ````
@@ -89,7 +89,7 @@ Clique em **Create**
 
 Após isso, espere todos os pod's serem processados e healthy
 
-### 10. Front end App
+### 10. Acessar o frontend do app
 ````bash
 kubectl port-forward svc/frontend -n default 8081:80
 ````
