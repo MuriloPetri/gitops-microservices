@@ -10,8 +10,7 @@ O **Git** é utilizado como **fonte única da verdade** para a infraestrutura e 
 ## ☁️ Arquitetura e Tecnologias
 - 🖥️ **Orquestração de Containers:** Kubernetes (via Rancher Desktop)  
 - ⚙️ **Ferramenta GitOps:** ArgoCD  
-- 🛍️ **Aplicação:** Online Boutique (microservices-demo da Google Cloud Platform)  
-- 📂 **Fonte da Verdade:** Repositório Git público no GitHub  
+- 🛍️ **Aplicação:** Online Boutique 
 - 💻 **Ambiente Local:** Rancher Desktop com Docker  
 
 ---
