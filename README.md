@@ -71,25 +71,21 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 ````
 e ele retornará a senha pra você
 
-### 9. Criar Application no ArgoCD
+### 9. Criar o App no ArgoCD 🚀
 
-Clique em *New App*
+Siga os passos abaixo na interface web do ArgoCD:
 
-Configurações:
+Clique em **New App**
+Preencha as configurações do aplicativo:
 
-Application Name: online-boutique
+   **Application Name:** `online-boutique`  
+   **Project:** `default`  
+   **Repository URL:** *URL do seu repositório público*  
+   **Path:** `k8s`  
+   **Cluster:** `https://kubernetes.default.svc`  
+   **Namespace:** `default`  
 
-Project: *default*
-
-Sync Policy: *Automatic*
-
-Repository URL: URL do seu repositório público
-
-Path: *k8s*
-
-Cluster: *https://kubernetes.default.svc*
-
-Clique em Create.
+Clique em **Create**
 
 Após isso, espere todos os pod's serem processados e healthy
 
